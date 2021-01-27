@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tours from './components/Tours';
 import Loading from './components/Loading';
 
@@ -11,6 +11,39 @@ function App() {
   const removeTour = (id) {
     const newTours = tours.filter((tour) => tour.id !== id)
     setTours(newTours)
+  }
+
+  const fetchTours = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(url)
+      const tours = await response.json()
+      setLoading(false)
+      setTours(tours)
+    } catch (error) {
+      setLoading(false)
+      consolelog(error)
+    }
+  }
+
+  useEffect( () => {
+    fetchTours()
+  }, [])
+  if (loading) {
+    return (
+      <main>
+        <Loading />
+      </main>
+    )
+  }
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div>
+          <h2>no tours left</h2>
+        </div>
+      </main>
+    )
   }
 
   return  (
