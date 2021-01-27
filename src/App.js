@@ -15,7 +15,7 @@ function App() {
 
   return  (
     <main>
-      <Tours tours={tours removeTour={removeTour}} />
+      <Tours tours={tours} removeTour={removeTour} />
     </main>
   )
 }
